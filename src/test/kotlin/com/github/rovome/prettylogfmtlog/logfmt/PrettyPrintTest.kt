@@ -3,10 +3,9 @@ package com.github.rovome.prettylogfmtlog.logfmt
 import junit.framework.TestCase
 class PrettyPrintTest : TestCase() {
     val prettyPrintIndicators = listOf(
-            "level=info time=2024-09-06T12:00:00Z msg=\"Test message\" [...]",
             "[",
             "]",
-            "  key = value",
+            "    key = value",
             "    anotherKey = \"another value\"",
             "    msg = \"Properties location [classpath:build.properties] not resolvable: class path resource [build.properties] cannot be opened because it does not exist\""
     )
@@ -14,6 +13,7 @@ class PrettyPrintTest : TestCase() {
     val standardLogfmtLogLineIndicators = listOf(
             "key=value",
             "key1=value1 key2=value2",
+            "level=info time=2024-09-06T12:00:00Z msg=\"Test message\"",
             "level=info time=2024-09-06T12:00:00Z user=\"john doe\" msg=\"Test message\" status=success"
     )
 

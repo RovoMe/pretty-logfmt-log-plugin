@@ -12,8 +12,8 @@ class FoldingTest : TestCase() {
         Param("Simple object") {
             it["level"] = "info"
             it["time"] = "2024-09-06T12:00:00Z"
-            it["user"] = "john doe"
-            it["msg"] = "Test message"
+            it["user"] = "\"john doe\""
+            it["msg"] = "\"Test message\""
             it["status"] = "success"
         },
         Param("line with issue") {
