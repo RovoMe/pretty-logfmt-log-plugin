@@ -39,7 +39,7 @@ enum class Level {
 private val levelKeys = listOf("level", "severity", "log.level", "Level", "@l")
 
 fun extractLevel(node: Map<String, String>): Level? {
-    return levelKeys.firstNotNullOfOrNull { node.get(it) }?.let { level ->
+    return levelKeys.firstNotNullOfOrNull { node[it] }?.let { level ->
         if (isNumeric(level)) {
             Level.fromInt(level.toInt())
         } else {
