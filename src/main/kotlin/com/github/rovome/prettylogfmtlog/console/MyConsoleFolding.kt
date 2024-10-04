@@ -3,7 +3,6 @@ package com.github.rovome.prettylogfmtlog.console
 import com.intellij.execution.ConsoleFolding
 import com.intellij.execution.ui.ConsoleView
 import com.intellij.openapi.components.service
-import com.intellij.openapi.diagnostic.thisLogger
 import com.intellij.openapi.project.Project
 import com.github.rovome.prettylogfmtlog.logfmt.isPartOfPrettyLogfmt
 import com.github.rovome.prettylogfmtlog.service.EphemeralStateService
