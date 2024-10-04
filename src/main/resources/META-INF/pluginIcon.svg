@@ -1,0 +1,17 @@
+<svg width="200" height="200" xmlns="http://www.w3.org/2000/svg">
+    <!-- Transparent background -->
+    <rect width="100%" height="100%" fill="none" />
+
+    <!-- Main LOGFMT Text with stylized appearance -->
+    <text x="20" y="110" font-family="Arial, sans-serif" font-size="30" font-weight="bold" fill="#FFA07A" style="letter-spacing: 2px;">
+        LOGFMT
+    </text>
+
+    <!-- Simple bracket shapes to symbolize structured data -->
+    <path d="M 10,50 L 10,150 Q 10,160 20,160 L 30,160" stroke="#4A90E2" stroke-width="4" fill="none" />
+    <path d="M 170,50 L 170,150 Q 170,160 160,160 L 150,160" stroke="#4A90E2" stroke-width="4" fill="none" />
+
+    <!-- Inner lines for data parsing representation -->
+    <line x1="50" y1="70" x2="130" y2="70" stroke="#4A90E2" stroke-width="3" />
+    <line x1="50" y1="130" x2="130" y2="130" stroke="#4A90E2" stroke-width="3" />
+</svg>

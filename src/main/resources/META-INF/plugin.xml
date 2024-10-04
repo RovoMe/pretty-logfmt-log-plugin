@@ -1,7 +1,7 @@
 <!-- Plugin Configuration File. Read more: https://plugins.jetbrains.com/docs/intellij/plugin-configuration-file.html -->
 <idea-plugin>
-    <id>com.github.rovome.prettylogfmtlogplugin</id>
-    <name>pretty-logfmt-log-plugin</name>
+    <id>com.github.rovome</id>
+    <name>Pretty LOGFMT Log</name>
     <vendor>rovome</vendor>
 
     <depends>com.intellij.modules.platform</depends>
@@ -9,10 +9,29 @@
     <resource-bundle>messages.MyBundle</resource-bundle>
 
     <extensions defaultExtensionNs="com.intellij">
-        <toolWindow factoryClass="com.github.rovome.prettylogfmtlogplugin.toolWindow.MyToolWindowFactory" id="MyToolWindow"/>
+        <consoleInputFilterProvider
+                implementation="com.github.rovome.prettylogfmtlog.console.MyConsoleInputFilterProvider"/>
+        <console.folding implementation="com.github.rovome.prettylogfmtlog.console.MyConsoleFolding"/>
+        <!-- Prevent folding when a stack trace is included in the LOGFMT log. -->
+        <stacktrace.fold substring="&quot;:" negate="true"/>
     </extensions>
 
     <applicationListeners>
-        <listener class="com.github.rovome.prettylogfmtlogplugin.listeners.MyApplicationActivationListener" topic="com.intellij.openapi.application.ApplicationActivationListener"/>
+        <listener class="com.github.rovome.prettylogfmtlog.listeners.MyApplicationActivationListener"
+                  topic="com.intellij.openapi.application.ApplicationActivationListener"/>
     </applicationListeners>
+
+    <actions>
+        <group id="com.github.rovome.prettylogfmtlog.ConsoleContextMenuRoot">
+            <add-to-group group-id="ConsoleView.PopupMenu" anchor="first"/>
+
+            <group id="com.github.rovome.prettylogfmtlog.ConsoleContextMenuGroup" popup="true" text="Pretty LOGFMT Log">
+                <action
+                        id="com.github.rovome.prettylogfmtlog.action.ToggleEnabledAction"
+                        class="com.github.rovome.prettylogfmtlog.action.ToggleEnabledAction">
+                </action>
+            </group>
+            <separator/>
+        </group>
+    </actions>
 </idea-plugin>

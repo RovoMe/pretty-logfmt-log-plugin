@@ -1,5 +1,6 @@
-package com.github.rovome.prettylogfmtlogplugin.listeners
+package com.github.rovome.prettylogfmtlog.listeners
 
+import com.github.rovome.prettylogfmtlog.MyBundle
 import com.intellij.openapi.application.ApplicationActivationListener
 import com.intellij.openapi.diagnostic.thisLogger
 import com.intellij.openapi.wm.IdeFrame
@@ -7,6 +8,6 @@ import com.intellij.openapi.wm.IdeFrame
 internal class MyApplicationActivationListener : ApplicationActivationListener {
 
     override fun applicationActivated(ideFrame: IdeFrame) {
-        thisLogger().warn("Don't forget to remove all non-needed sample code files with their corresponding registration entries in `plugin.xml`.")
+        thisLogger().debug(MyBundle.message("applicationActivated"))
     }
 }
