@@ -45,10 +45,10 @@ fun prettyPrintLogfmt(node: Map<String, String>): String {
 // (?:                                               -> start of no-capture group
 // \[                                                -> start of expanded node and nothing afterward
 // |]                                                -> end of expanded node and nothing afterward
-// | {4}[\w._]+ = ("((?:[^"\\]|\\.)* *)"|\S+)        -> 'key = value' part in expanded node
+// | {4}[\w._]+ = (?:"((?:[^"\\]|\\.)* *)"|\S+[^;])  -> 'key = value' part in expanded node which
 // )                                                 -- end of no-capture group
 // $                                                 -> the end of the line
-private val prettyLogfmtPartRegex = Regex("""^(?:\[|]| {4}[\w._]+ = ("((?:[^"\\]|\\.)* *)"|\S+))$""")
+private val prettyLogfmtPartRegex = Regex("""^(?:\[|]| {4}[\w._]+ = (?:"((?:[^"\\]|\\.)* *)"|\S+[^;])?)$""")
 
 fun isPartOfPrettyLogfmt(line: String): Boolean {
     return prettyLogfmtPartRegex.containsMatchIn(line)
