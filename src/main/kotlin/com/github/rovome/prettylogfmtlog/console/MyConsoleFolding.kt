@@ -1,11 +1,11 @@
 package com.github.rovome.prettylogfmtlog.console
 
+import com.github.rovome.prettylogfmtlog.logfmt.isPartOfPrettyLogfmt
+import com.github.rovome.prettylogfmtlog.service.EphemeralStateService
 import com.intellij.execution.ConsoleFolding
 import com.intellij.execution.ui.ConsoleView
 import com.intellij.openapi.components.service
 import com.intellij.openapi.project.Project
-import com.github.rovome.prettylogfmtlog.logfmt.isPartOfPrettyLogfmt
-import com.github.rovome.prettylogfmtlog.service.EphemeralStateService
 
 class MyConsoleFolding : ConsoleFolding() {
     private var consoleView: ConsoleView? = null
@@ -26,7 +26,7 @@ class MyConsoleFolding : ConsoleFolding() {
         // purpose because there is no other way to get consoleView reference in "shouldFoldLine"
         // method.
         this.consoleView = consoleView
-        return true
+        return super.isEnabledForConsole(consoleView)
     }
 
     private fun isEnabled(project: Project): Boolean {
@@ -35,7 +35,8 @@ class MyConsoleFolding : ConsoleFolding() {
         return service.isEnabled(consoleView)
     }
 
-//    override fun shouldBeAttachedToThePreviousLine(): Boolean {
-//        return false
-//    }
+    override fun shouldBeAttachedToThePreviousLine(): Boolean {
+        // attach [...] to the end of the log line instead of to new line
+        return true
+    }
 }

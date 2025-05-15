@@ -8,6 +8,7 @@ fun extractMessage(node: Map<String, String>): String? {
 
 fun sanitize(line: String?): String? {
     return line?.
+            trimEnd()?.
             replace("\\\"", "\"")?.
             replace("\\t", "\t")?.
             replace("\\\\n", "\n")?.
