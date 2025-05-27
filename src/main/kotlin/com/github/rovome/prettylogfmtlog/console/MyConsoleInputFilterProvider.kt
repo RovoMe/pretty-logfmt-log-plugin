@@ -1,5 +1,12 @@
 package com.github.rovome.prettylogfmtlog.console
 
+import com.github.rovome.prettylogfmtlog.logfmt.parseLogLine
+import com.github.rovome.prettylogfmtlog.logfmt.prettyPrintLogfmt
+import com.github.rovome.prettylogfmtlog.logentry.extractLevel
+import com.github.rovome.prettylogfmtlog.logentry.extractMessage
+import com.github.rovome.prettylogfmtlog.logentry.extractTimestamp
+import com.github.rovome.prettylogfmtlog.logentry.Level
+import com.github.rovome.prettylogfmtlog.service.EphemeralStateService
 import com.intellij.execution.filters.ConsoleDependentInputFilterProvider
 import com.intellij.execution.filters.InputFilter
 import com.intellij.execution.ui.ConsoleViewContentType
@@ -8,10 +15,6 @@ import com.intellij.openapi.diagnostic.thisLogger
 import com.intellij.openapi.project.Project
 import com.intellij.openapi.util.Pair
 import com.intellij.psi.search.GlobalSearchScope
-import com.github.rovome.prettylogfmtlog.logfmt.parseLogLine
-import com.github.rovome.prettylogfmtlog.logfmt.prettyPrintLogfmt
-import com.github.rovome.prettylogfmtlog.logentry.*
-import com.github.rovome.prettylogfmtlog.service.EphemeralStateService
 import com.intellij.execution.ui.ConsoleView
 import java.time.ZoneId
 import java.time.format.DateTimeFormatter
@@ -50,23 +53,18 @@ class MyConsoleInputFilter(
         val timestamp = extractTimestamp(node)
         val level = extractLevel(node)
         val message = extractMessage(node)
-        val stackTrace = extractStackTrace(node)
 
         if (timestamp == null && level == null && message == null) {
             // we do not have a valid LOGFMT log line
             return mutableListOf(Pair(text, contentType))
         }
 
-        // .trimEnd('\n') is necessary because of the following reasons:
-        // - When stackTrace is null or empty, we don't want to add an extra newline.
-        // - When stackTrace ends with a newline, trimming the last newline makes a folding marker
-        //   look better.
-        val coloredMessage = "$level: $message\n${stackTrace ?: ""}".trimEnd('\n')
+        val headerMessage = "$level: $message"
 
         val logfmtString = prettyPrintLogfmt(node)
         return mutableListOf(
                 Pair("[${timestamp?.format(zoneId, timestampFormatter)}] ", contentType),
-                Pair(coloredMessage, contentTypeOf(level, contentType)),
+                Pair(headerMessage, contentTypeOf(level, contentType)),
                 Pair(" \n$logfmtString", contentType),
         )
     }

@@ -1,5 +1,7 @@
 package com.github.rovome.prettylogfmtlog.logfmt
 
+import com.github.rovome.prettylogfmtlog.logentry.sanitize;
+
 fun parseLogLine(logLine: String): Map<String, String>? {
     // Create a mutable map to store key-value pairs
     val result = mutableMapOf<String, String>()
@@ -22,14 +24,11 @@ fun parseLogLine(logLine: String): Map<String, String>? {
             // If no '=' found, break (invalid logLine format)
             break
         }
-
         val key = logLine.substring(keyStart, i).trim()
-
         i++ // Skip '=' character
 
         // Extract the value
         val value = StringBuilder()
-
         // Check if value starts with a quote or a square bracket
         if (i < length && logLine[i] == '"') {
             i++ // Skip opening quote
@@ -76,7 +75,12 @@ fun parseLogLine(logLine: String): Map<String, String>? {
         }
 
         // Add the key-value pair to the map
-        result[key] = value.toString()
+        if ("error" == key) {
+            result[key] = sanitize(value.toString()).toString()
+            result["rawError"] = value.toString()
+        } else {
+            result[key] = value.toString()
+        }
     }
 
     // return the map of parsed properties or null if it's empty

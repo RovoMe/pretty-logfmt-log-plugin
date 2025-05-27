@@ -31,7 +31,7 @@ class ParseTest : TestCase() {
     fun testParseException() {
         val result = parseLogLine("""time="2024-09-05T15:51:28.426" level=warn thread=main package=org.acme module=TestApp msg="Some problem encountered" error="java.lang.Exception: null\n\tat org.acme.TestApp.logError(TestApp.java:94)\n\tat org.acme.TestApp.standardLogger(TestApp.java:34)\n\tat org.acme.TestApp.<init>(TestApp.java:20)\n\tat org.acme.TestApp.main(TestApp.java:16)\n"""")
         assertNotNull(result)
-        assertEquals(7, result?.size)
+        assertEquals(8, result?.size)
         val map = mutableMapOf<String, String>()
         map["time"] = "\"2024-09-05T15:51:28.426\""
         map["level"] = "warn"
@@ -39,7 +39,8 @@ class ParseTest : TestCase() {
         map["package"] = "org.acme"
         map["module"] = "TestApp"
         map["msg"] = "\"Some problem encountered\""
-        map["error"] = "\"java.lang.Exception: null\\n\\tat org.acme.TestApp.logError(TestApp.java:94)\\n\\tat org.acme.TestApp.standardLogger(TestApp.java:34)\\n\\tat org.acme.TestApp.<init>(TestApp.java:20)\\n\\tat org.acme.TestApp.main(TestApp.java:16)\\n\""
+        map["error"] = "\"java.lang.Exception: null\n\tat org.acme.TestApp.logError(TestApp.java:94)\n\tat org.acme.TestApp.standardLogger(TestApp.java:34)\n\tat org.acme.TestApp.<init>(TestApp.java:20)\n\tat org.acme.TestApp.main(TestApp.java:16)\n\""
+        map["rawError"] = "\"java.lang.Exception: null\\n\\tat org.acme.TestApp.logError(TestApp.java:94)\\n\\tat org.acme.TestApp.standardLogger(TestApp.java:34)\\n\\tat org.acme.TestApp.<init>(TestApp.java:20)\\n\\tat org.acme.TestApp.main(TestApp.java:16)\\n\""
         assertEquals(map, result)
     }
 

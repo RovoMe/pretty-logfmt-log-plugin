@@ -8,6 +8,8 @@ class FoldingTest : TestCase() {
             val creator: (MutableMap<String, String>) -> Unit
     )
 
+    val tracker = LogFmtBlockStateTracker()
+
     private val params = listOf(
         Param("Simple object") {
             it["level"] = "info"
@@ -49,14 +51,14 @@ class FoldingTest : TestCase() {
             if (index < lines.size - 1) {
                 assertTrue(
                     "[$description] Line $index should be folded",
-                    isPartOfPrettyLogfmt(line)
+                    tracker.shouldFoldLine(line)
                 )
             } else {
                 // last line consists of an empty string due to the pretty printing adding a
                 // trailing \n to the message as otherwise the closing ] would be shown on the start
                 // of the next log line
                 assertFalse("[$description] Line $index should not be folded",
-                    isPartOfPrettyLogfmt(line)
+                    tracker.shouldFoldLine(line)
                 )
             }
         }
