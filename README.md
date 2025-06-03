@@ -62,6 +62,10 @@ which does have the following context menu item is not supported.
 
 - Very long log lines are broken down after like 2000 characters and the plugin will only format the
   first part then while printing the remaining part as is
+- When expanding a folded region of a particular log line that contains a stacktrace in its error
+  property, the stacktrace might have multiple folding regions available. These additional folding
+  regions are done by IntelliJ itself. Most likely by the Settings -> Editor -> General ->
+  Console -> `Fold console lines that contain:` setting
 - When the `Pretty JSON log` plugin is present and activated it may interfere with the formatting of
   the folding area and thus add further unintended and/or unnecessary folding sections
 
